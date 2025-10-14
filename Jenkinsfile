@@ -33,15 +33,17 @@ pipeline {
             }
         }
 
-        stage('Deploy - Backup Old Jar') {
-            steps {
-                echo '💾 Fazendo backup do jar antigo com datetime...'
-                bat """
-                powershell -Command "\$date = Get-Date -Format 'yyyyMMdd_HHmmss'; \
-                Copy-Item -Path '${SERVICE_PATH}\\\\easytasks.jar' -Destination '${BACKUP_PATH}\\\\easytasks_\$date.jar' -Force"
-                """
-            }
-        }
+stage('Deploy - Backup Old Jar') {
+    steps {
+        echo '💾 Fazendo backup do jar antigo com datetime...'
+        bat """
+        powershell -Command "\$date = Get-Date -Format 'yyyyMMdd_HHmmss'; \
+        \$dest = Join-Path '${BACKUP_PATH}' ('easytasks_' + \$date + '.jar'); \
+        Copy-Item -Path '${SERVICE_PATH}\\\\easytasks.jar' -Destination \$dest -Force"
+        """
+    }
+}
+
 
         stage('Deploy - Copy New Jar') {
             steps {
