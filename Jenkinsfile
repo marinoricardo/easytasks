@@ -57,9 +57,7 @@ stage('Deploy - Start Service') {
         echo '▶️ Reiniciando o serviço EasyTasks...'
         bat """
         powershell -Command "
-        # Esperar o serviço parar
         do { Start-Sleep -Seconds 2 } while ((Get-Service -Name '${SERVICE_NAME}').Status -ne 'Stopped');
-        # Iniciar serviço
         Start-Service -Name '${SERVICE_NAME}'
         "
         """
