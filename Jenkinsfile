@@ -49,6 +49,15 @@ pipeline {
                 bat "powershell -Command \"Copy-Item -Path 'target\\\\*.jar' -Destination '${SERVICE_PATH}\\\\easytasks.jar' -Force\""
             }
         }
+
+
+        stage('Deploy - Wait Before Start') {
+            steps {
+                echo '⏳ Esperando 1 minuto antes de iniciar o serviço...'
+                bat "powershell -Command \"Start-Sleep -Seconds 30\""
+                
+            }
+        }
         
     }
 
