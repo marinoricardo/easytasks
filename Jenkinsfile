@@ -52,6 +52,13 @@ pipeline {
             }
         }
 
+        stage('Deploy - Start Service') {
+            steps {
+                echo '▶️ Iniciando o serviço EasyTasks...'
+                bat "${NSSM_PATH} start ${SERVICE_NAME}"
+            }
+        }
+
     }
 
     post {
