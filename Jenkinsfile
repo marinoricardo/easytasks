@@ -12,13 +12,15 @@ pipeline {
             }
         }
 
-        stage('Archive') {
-            steps {
-                echo '📦 A arquivar o pacote gerado...'
-                // Copiar o .jar gerado para C:\Services\EasyTasks
-                bat 'copy /Y target\\*.jar C:\\Services\\EasyTasks\\easytasks.jar'
-            }
-        }
+stage('Archive') {
+    steps {
+        echo '📦 A arquivar o pacote gerado...'
+        bat '''
+        powershell -Command "if (!(Test-Path 'C:\\Services\\EasyTasks')) { New-Item -ItemType Directory -Path 'C:\\Services\\EasyTasks' }; Copy-Item -Path target\\*.jar -Destination C:\\Services\\EasyTasks\\easytasks.jar -Force"
+        '''
+    }
+}
+
     }
 
     post {
