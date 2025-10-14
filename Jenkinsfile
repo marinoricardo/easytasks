@@ -12,12 +12,13 @@ pipeline {
     }
 
     stages {
-                stage('Deploy - Stop Service') {
+        stage('Deploy - Stop Service') {
             steps {
                 echo '⏹ Parando o serviço EasyTasks...'
                 bat "${NSSM_PATH} stop ${SERVICE_NAME}"
             }
         }
+
         stage('Build') {
             steps {
                 echo '🚀 A compilar o projeto...'
@@ -28,9 +29,7 @@ pipeline {
         stage('Deploy - Prepare Backup') {
             steps {
                 echo '📦 Criando pasta de backup se não existir...'
-                bat """
-                powershell -Command "if (!(Test-Path '${BACKUP_PATH}')) { New-Item -ItemType Directory -Path '${BACKUP_PATH}' }"
-                """
+                bat "powershell -Command \"if (!(Test-Path '${BACKUP_PATH}')) { New-Item -ItemType Directory -Path '${BACKUP_PATH}' }\""
             }
         }
 
@@ -51,13 +50,19 @@ pipeline {
             }
         }
 
+        stage('Deploy - Wait Before Start') {
+            steps {
+                echo '⏳ Esperando 1 minuto antes de iniciar o serviço...'
+                bat "timeout /t 60 /nobreak"
+            }
+        }
+
         stage('Deploy - Start Service') {
             steps {
                 echo '▶️ Iniciando o serviço EasyTasks...'
                 bat "${NSSM_PATH} start ${SERVICE_NAME}"
             }
         }
-
     }
 
     post {
