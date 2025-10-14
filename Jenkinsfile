@@ -5,7 +5,7 @@ pipeline {
         stage('Build') {
             steps {
                 echo '🚀 A compilar o projeto...'
-                sh 'mvn clean package -DskipTests'
+                bat 'mvn clean package -DskipTests'
             }
         }
 
