@@ -30,9 +30,10 @@ pipeline {
 
         stage('Deploy - Backup Old Jar') {
             steps {
-                echo '💾 Fazendo backup do jar antigo...'
+                echo '💾 Fazendo backup do jar antigo com datetime...'
                 bat """
-                powershell -Command "\$date = Get-Date -Format 'yyyyMMdd_HHmmss'; Copy-Item -Path '${SERVICE_PATH}\\\\easytasks.jar' -Destination '${BACKUP_PATH}\\\\easytasks_\$date.jar' -Force"
+                powershell -Command "\$date = Get-Date -Format 'yyyyMMdd_HHmmss'; \
+                Copy-Item -Path '${SERVICE_PATH}\\\\easytasks.jar' -Destination '${BACKUP_PATH}\\\\easytasks_\$date.jar' -Force"
                 """
             }
         }
