@@ -34,13 +34,13 @@ pipeline {
                 """
 
                 // Parar serviço
-                bat "& '${NSSM_PATH}' stop '${SERVICE_NAME}'"
+                bat "'${NSSM_PATH}' stop '${SERVICE_NAME}'"
 
                 // Copiar novo jar
                 bat "powershell -Command \"Copy-Item -Path 'target\\\\*.jar' -Destination '${SERVICE_PATH}\\\\easytasks.jar' -Force\""
 
                 // Reiniciar serviço
-                bat "& '${NSSM_PATH}' start '${SERVICE_NAME}'"
+                bat "'${NSSM_PATH}' start '${SERVICE_NAME}'"
             }
         }
     }
