@@ -21,24 +21,26 @@ pipeline {
 
         stage('Deploy') {
             steps {
-                echo '📦 A preparar deploy do pacote...'
+                echo '📦 Deploy iniciado...'
+
+                // Criar pasta de backup se não existir
                 bat """
-                powershell -Command "
-                # Criar backup
-                if (!(Test-Path '${BACKUP_PATH}')) { New-Item -ItemType Directory -Path '${BACKUP_PATH}' };
-                \$date = Get-Date -Format 'yyyyMMdd_HHmmss';
-                Copy-Item -Path '${SERVICE_PATH}\\\\easytasks.jar' -Destination '${BACKUP_PATH}\\\\easytasks_\$date.jar' -Force;
-
-                # Parar serviço
-                & '${NSSM_PATH}' stop '${SERVICE_NAME}';
-
-                # Copiar novo pacote
-                Copy-Item -Path 'target\\\\*.jar' -Destination '${SERVICE_PATH}\\\\easytasks.jar' -Force;
-
-                # Reiniciar serviço
-                & '${NSSM_PATH}' start '${SERVICE_NAME}';
-                "
+                powershell -Command "if (!(Test-Path '${BACKUP_PATH}')) { New-Item -ItemType Directory -Path '${BACKUP_PATH}' }"
                 """
+
+                // Backup do jar antigo com timestamp
+                bat """
+                powershell -Command "\$date = Get-Date -Format 'yyyyMMdd_HHmmss'; Copy-Item -Path '${SERVICE_PATH}\\\\easytasks.jar' -Destination '${BACKUP_PATH}\\\\easytasks_\$date.jar' -Force"
+                """
+
+                // Parar serviço
+                bat "& '${NSSM_PATH}' stop '${SERVICE_NAME}'"
+
+                // Copiar novo jar
+                bat "powershell -Command \"Copy-Item -Path 'target\\\\*.jar' -Destination '${SERVICE_PATH}\\\\easytasks.jar' -Force\""
+
+                // Reiniciar serviço
+                bat "& '${NSSM_PATH}' start '${SERVICE_NAME}'"
             }
         }
     }
