@@ -8,7 +8,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api")
@@ -26,11 +28,11 @@ public class IncidentController {
     }
 
     @GetMapping("/teste")
-    public ResponseEntity<List<String>> teste(){
-        List<String> list = new ArrayList<>();
-        list.add("Teste 1");
-        list.add("Teste 2");
-        list.add("Teste 3");
-        return ResponseEntity.ok().body(list);
+    public ResponseEntity<Map<String, String>> teste(){
+        Map<String, String> map = new HashMap<>();
+        map.put("nome", "Air");
+        map.put("idade", "30");
+        map.put("profissao", "Desenvolvedor");  
+        return ResponseEntity.ok().body(map);
     }
 }
