@@ -12,6 +12,12 @@ pipeline {
     }
 
     stages {
+                stage('Deploy - Stop Service') {
+            steps {
+                echo '⏹ Parando o serviço EasyTasks...'
+                bat "${NSSM_PATH} stop ${SERVICE_NAME}"
+            }
+        }
         stage('Build') {
             steps {
                 echo '🚀 A compilar o projeto...'
@@ -38,13 +44,6 @@ pipeline {
             }
         }
 
-        stage('Deploy - Stop Service') {
-            steps {
-                echo '⏹ Parando o serviço EasyTasks...'
-                bat "${NSSM_PATH} stop ${SERVICE_NAME}"
-            }
-        }
-
         stage('Deploy - Copy New Jar') {
             steps {
                 echo '📄 Copiando novo jar...'
@@ -62,6 +61,10 @@ pipeline {
     }
 
     post {
+        always {
+            echo '🔄 Garantindo que o serviço EasyTasks está iniciado...'
+            bat "${NSSM_PATH} start ${SERVICE_NAME}"
+        }
         success {
             echo '✅ Build e deploy concluídos com sucesso!'
         }
