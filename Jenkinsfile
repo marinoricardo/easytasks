@@ -51,15 +51,6 @@ pipeline {
                 bat "powershell -Command \"Copy-Item -Path 'target\\\\*.jar' -Destination '${SERVICE_PATH}\\\\easytasks.jar' -Force\""
             }
         }
-    //     stage('Deploy - Start Service') {
-    // steps {
-    //     echo '▶️ Reiniciando o serviço EasyTasks...'
-    //     bat """
-    //     powershell -Command "while ((Get-Service -Name '${SERVICE_NAME}').Status -ne 'Stopped') { Start-Sleep -Seconds 2 }; Start-Service -Name '${SERVICE_NAME}'"
-    //     """
-    // }
-}
-
 
     }
 
