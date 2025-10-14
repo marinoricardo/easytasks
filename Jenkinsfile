@@ -1,9 +1,8 @@
 pipeline {
     agent any
     tools {
-        maven 'MAVEN_HOME' // aqui deve ser o mesmo nome que colocaste no Jenkins
+        maven 'MAVEN_HOME' // mesmo nome configurado no Jenkins
     }
-
 
     stages {
         stage('Build') {
@@ -16,6 +15,8 @@ pipeline {
         stage('Archive') {
             steps {
                 echo '📦 A arquivar o pacote gerado...'
+                // Copiar o .jar gerado para C:\Services\EasyTasks
+                bat 'copy /Y target\\*.jar C:\\Services\\EasyTasks\\easytasks.jar'
             }
         }
     }
