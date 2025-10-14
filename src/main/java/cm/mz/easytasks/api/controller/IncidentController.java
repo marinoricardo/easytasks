@@ -31,8 +31,7 @@ public class IncidentController {
     public ResponseEntity<Map<String, String>> teste(){
         Map<String, String> map = new HashMap<>();
         map.put("name", "Aninha");
-        map.put("idade", "30");
-        map.put("profissao", "Desenvolvedor");  
+        map.put("age", "30");
         return ResponseEntity.ok().body(map);
     }
 }
