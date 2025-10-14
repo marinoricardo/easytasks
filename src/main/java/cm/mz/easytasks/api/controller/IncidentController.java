@@ -24,4 +24,13 @@ public class IncidentController {
         List<Incident> incidents = this.incidentService.findAll();
         return ResponseEntity.ok().body(incidents);
     }
+
+    @GetMapping("/teste")
+    public ResponseEntity<List<String>> teste(){
+        List<String> list = new ArrayList<>();
+        list.add("Teste 1");
+        list.add("Teste 2");
+        list.add("Teste 3");
+        return ResponseEntity.ok().body(list);
+    }
 }
