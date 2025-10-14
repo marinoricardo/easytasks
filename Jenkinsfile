@@ -41,7 +41,7 @@ pipeline {
         stage('Deploy - Stop Service') {
             steps {
                 echo '⏹ Parando o serviço EasyTasks...'
-                bat "\"${NSSM_PATH}\" stop ${SERVICE_NAME}"
+                bat "${NSSM_PATH} stop ${SERVICE_NAME}"
             }
         }
 
@@ -51,13 +51,13 @@ pipeline {
                 bat "powershell -Command \"Copy-Item -Path 'target\\\\*.jar' -Destination '${SERVICE_PATH}\\\\easytasks.jar' -Force\""
             }
         }
-        stage('Deploy - Start Service') {
-    steps {
-        echo '▶️ Reiniciando o serviço EasyTasks...'
-        bat """
-        powershell -Command "while ((Get-Service -Name '${SERVICE_NAME}').Status -ne 'Stopped') { Start-Sleep -Seconds 2 }; Start-Service -Name '${SERVICE_NAME}'"
-        """
-    }
+    //     stage('Deploy - Start Service') {
+    // steps {
+    //     echo '▶️ Reiniciando o serviço EasyTasks...'
+    //     bat """
+    //     powershell -Command "while ((Get-Service -Name '${SERVICE_NAME}').Status -ne 'Stopped') { Start-Sleep -Seconds 2 }; Start-Service -Name '${SERVICE_NAME}'"
+    //     """
+    // }
 }
 
 
