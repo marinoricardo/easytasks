@@ -52,12 +52,20 @@ pipeline {
             }
         }
 
-        stage('Deploy - Start Service') {
-            steps {
-                echo '▶️ Reiniciando o serviço EasyTasks...'
-                bat "\"${NSSM_PATH}\" start ${SERVICE_NAME}"
-            }
-        }
+stage('Deploy - Start Service') {
+    steps {
+        echo '▶️ Reiniciando o serviço EasyTasks...'
+        bat """
+        powershell -Command "
+        # Esperar o serviço parar
+        do { Start-Sleep -Seconds 2 } while ((Get-Service -Name '${SERVICE_NAME}').Status -ne 'Stopped');
+        # Iniciar serviço
+        Start-Service -Name '${SERVICE_NAME}'
+        "
+        """
+    }
+}
+
     }
 
     post {
