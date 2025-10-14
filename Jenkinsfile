@@ -1,5 +1,9 @@
 pipeline {
     agent any
+    tools {
+        maven 'MAVEN_HOME' // aqui deve ser o mesmo nome que colocaste no Jenkins
+    }
+
 
     stages {
         stage('Build') {
