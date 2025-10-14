@@ -53,7 +53,8 @@ pipeline {
         stage('Deploy - Wait Before Start') {
             steps {
                 echo '⏳ Esperando 1 minuto antes de iniciar o serviço...'
-                bat "timeout /t 60 /nobreak"
+                bat "powershell -Command \"Start-Sleep -Seconds 60\""
+                
             }
         }
 
