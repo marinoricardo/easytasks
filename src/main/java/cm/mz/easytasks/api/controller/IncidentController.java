@@ -30,7 +30,7 @@ public class IncidentController {
     @GetMapping("/teste")
     public ResponseEntity<Map<String, String>> teste(){
         Map<String, String> map = new HashMap<>();
-        map.put("name", "Aninha");
+        map.put("name", "Aninha22");
         map.put("age", "30");
         return ResponseEntity.ok().body(map);
     }
